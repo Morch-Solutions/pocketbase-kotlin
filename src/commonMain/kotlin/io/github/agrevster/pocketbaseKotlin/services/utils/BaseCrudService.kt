@@ -31,7 +31,7 @@ public abstract class BaseCrudService<T : BaseModel>(client: io.github.agrevster
             val list = _getList<T>(path, page, batch, sortBy, filterBy, expandRelations, showFields, skipTotal)
             val items = list.items.toMutableList()
             result.addAll(items)
-            if (items.isNotEmpty() && list.totalItems <= result.size) return result
+            if (items.size < batch) return result
             page += 1
         }
     }
@@ -56,7 +56,7 @@ public abstract class BaseCrudService<T : BaseModel>(client: io.github.agrevster
                 showFields.addTo(parameters)
                 parameters.append("page", page.toString())
                 parameters.append("perPage", perPage.toString())
-                if (skipTotal) parameters.append("skipTotal", "1")
+                if (skipTotal) parameters.append("skipTotal", "true")
             }
         }
         PocketbaseException.handle(response)
