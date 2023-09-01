@@ -13,7 +13,7 @@ public class ShowFields(vararg fields: String) {
 
     init {
         fieldsToShow = fields.joinToString(separator = ",")
-        println(fieldsToShow)
+//        println(fieldsToShow)
     }
 
     /**s
